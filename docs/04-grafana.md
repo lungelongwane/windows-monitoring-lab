@@ -1,28 +1,28 @@
 # Grafana
 
-Grafana is used as the visualisation layer for the lab.
+Grafana was used as the visualisation layer for the **mydomain.com** Windows monitoring lab.
 
-## Provisioning
+## Dashboard purpose
 
-The repository provisions:
+The dashboards provide a visual view of the Windows systems monitored through Prometheus, including system health information available from the enabled Windows exporter collectors.
 
-- a Prometheus datasource
-- a Windows Monitoring dashboard provider
-- a starter Windows dashboard
+The two key monitored systems are:
 
-This makes the dashboard configuration reproducible instead of requiring every panel to be created manually.
+- Domain Controller — `172.16.0.1`
+- User PC — `172.16.0.11`
 
-## Dashboard scope
+## Recommended dashboard views
 
-The starter dashboard focuses on:
+The dashboard can be organised by the `role` and `host` labels in Prometheus so the Domain Controller and user PC can be viewed separately.
 
-- CPU usage
-- available memory
-- disk free space
-- system uptime
+Typical Windows monitoring views include CPU, memory, disk, network, uptime and other exporter-provided system metrics. Only metrics confirmed to exist in the installed exporter should be used in production dashboard panels.
 
-The dashboard can be expanded with network throughput, service state and alerting panels after those metrics are confirmed on the monitored host.
+## Troubleshooting an empty panel
 
-## Important
+1. Check the Prometheus target is UP.
+2. Query the relevant metric directly in Prometheus.
+3. Confirm the metric exists on the exporter endpoint.
+4. Check that the Grafana datasource points to Prometheus.
+5. Check the dashboard query and labels.
 
-Dashboard panels depend on the metric names exposed by the installed windows_exporter version and enabled collectors. If a panel is empty, verify the metric exists in the exporter endpoint and Prometheus before changing the Grafana query.
+This order isolates exporter, Prometheus and Grafana problems instead of changing dashboard queries blindly.
