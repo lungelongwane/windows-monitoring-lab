@@ -1,0 +1,13 @@
+# Local environment and generated data
+.env
+*.log
+grafana-data/
+prometheus-data/
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local screenshots can be committed intentionally; no wildcard exclusion is used.
