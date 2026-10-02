@@ -2,11 +2,22 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
+# Actual Windows systems in the mydomain.com monitoring lab.
+# Replace the exporter port below if the original lab used a different port.
 scrape_configs:
-  - job_name: windows
+  - job_name: windows-domain
     static_configs:
       - targets:
-          - host.docker.internal:9182
+          - 172.16.0.1:9182
         labels:
           environment: lab
-          platform: windows
+          domain: mydomain.com
+          role: domain-controller
+          host: dc
+      - targets:
+          - 172.16.0.11:9182
+        labels:
+          environment: lab
+          domain: mydomain.com
+          role: user-pc
+          host: user-pc
