@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: Windows Monitoring
+    orgId: 1
+    folder: Windows Monitoring
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards
