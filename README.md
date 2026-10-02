@@ -2,6 +2,12 @@
 
 A hands-on Windows monitoring lab using **Prometheus**, **Grafana**, and **windows_exporter** to monitor a Windows domain environment.
 
+## Background & Motivation
+
+Having worked with infrastructure and systems support, I built this monitoring lab to strengthen my practical understanding of Windows infrastructure monitoring and performance visibility.
+
+The lab focuses on monitoring a Windows Domain Controller and Windows client PC within the same `mydomain.com` environment using Prometheus and Grafana. It provides practical experience with Windows exporters, Prometheus scrape configuration, monitoring targets, metric collection, and Grafana dashboards for observing system health and performance.
+
 ## Actual lab environment
 
 The lab was built around the **mydomain.com** Windows domain:
