@@ -1,41 +1,35 @@
 # Setup
 
-## 1. Windows exporter
+## Lab environment
 
-Install windows_exporter on the Windows machine being monitored. Confirm that its metrics endpoint is reachable:
+The implemented environment consisted of:
 
-```text
-http://localhost:9182/metrics
-```
+- Windows Domain Controller: `172.16.0.1`
+- Windows user PC: `172.16.0.11`
+- Windows domain: `mydomain.com`
+- Prometheus for metric collection
+- Grafana for visualisation
+- A Windows metrics exporter on the monitored systems
 
-The exact installer and collector selection should follow the version you install. Avoid hard-coding an installer URL in this repository because release URLs and versions change.
+## Monitoring targets
 
-## 2. Start Prometheus and Grafana
+Prometheus must be able to reach the exporter endpoint on both Windows systems.
 
-From the repository root:
+The repository's current Prometheus configuration uses `172.16.0.1:9182` and `172.16.0.11:9182` as exporter targets. If the original lab used a different exporter port, update the configuration to match the original environment rather than assuming the port.
 
-```powershell
-docker compose up -d
-```
+## Validation
 
-Check containers:
+1. Confirm the Domain Controller is reachable at `172.16.0.1`.
+2. Confirm the user PC is reachable at `172.16.0.11`.
+3. Confirm the Windows metrics exporter is running on both systems.
+4. Confirm Prometheus can scrape both targets.
+5. Check **Status > Targets** in Prometheus and verify the targets are healthy.
+6. Open Grafana and verify the Prometheus datasource and Windows monitoring dashboard.
 
-```powershell
-docker compose ps
-```
+## Network considerations
 
-## 3. Validate Prometheus
+Both systems need to be reachable from the Prometheus host. Windows Firewall rules must allow the exporter traffic required by the monitoring configuration.
 
-Open Prometheus and go to **Status > Targets**.
+## Security
 
-The `windows` target should be listed as UP.
-
-## 4. Validate Grafana
-
-Open Grafana and confirm the Prometheus datasource is provisioned. The Windows Monitoring dashboard should be available in the Windows Monitoring folder.
-
-## 5. Separate VM/server
-
-If the exporter runs on another Windows VM or server, edit `prometheus/prometheus.yml` and replace `host.docker.internal:9182` with the reachable hostname or IP address.
-
-Ensure Windows Firewall permits the exporter port from the Prometheus host.
+Do not store domain passwords, exporter credentials, API tokens or other secrets in the repository.
