@@ -2,22 +2,34 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
-# Actual Windows systems in the mydomain.com monitoring lab.
-# Replace the exporter port below if the original lab used a different port.
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+rule_files: []
+
 scrape_configs:
-  - job_name: windows-domain
+  - job_name: "prometheus"
     static_configs:
-      - targets:
-          - 172.16.0.1:9182
+      - targets: ["localhost:9090"]
         labels:
-          environment: lab
-          domain: mydomain.com
-          role: domain-controller
-          host: dc
-      - targets:
-          - 172.16.0.11:9182
+          app: "prometheus"
+
+  - job_name: "node_exporter"
+    static_configs:
+      - targets: ["localhost:9100"]
+
+  - job_name: "windows_dc"
+    static_configs:
+      - targets: ["172.16.0.1:9182"]
         labels:
-          environment: lab
-          domain: mydomain.com
-          role: user-pc
-          host: user-pc
+          app: "windows_exporter"
+          role: "domain_controller"
+
+  - job_name: "windows_client"
+    static_configs:
+      - targets: ["172.16.0.11:9182"]
+        labels:
+          app: "windows_exporter"
+          role: "client_pc"
