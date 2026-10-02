@@ -1,31 +1,34 @@
 # Prometheus
 
-Prometheus is responsible for scraping and querying the metrics exposed by windows_exporter.
+Prometheus was used as the metrics collection and time-series database component of the **mydomain.com** monitoring lab.
 
-## Scrape configuration
+## Configured Windows targets
 
-The repository uses a dedicated `windows` scrape job. The default target is:
+The lab contains two Windows monitoring targets:
 
-```text
-host.docker.internal:9182
-```
+| Target | Role | Domain |
+|---|---|---|
+| `172.16.0.1:9182` | Domain Controller | mydomain.com |
+| `172.16.0.11:9182` | User PC | mydomain.com |
 
-This assumes Prometheus runs in Docker Desktop on the same Windows host as the exporter.
+The exporter port shown here is the current repository configuration. Verify it against the original lab if exact historical configuration is required.
 
-## Validation
+## Target validation
 
-Use the Prometheus web interface:
+Use **Status > Targets** in Prometheus to confirm that both Windows endpoints are being scraped successfully.
 
-- **Status > Targets** to verify target health.
-- **Graph** to query metrics.
-- Query the exporter data before troubleshooting Grafana.
+Useful checks include:
 
-Example query:
+- target state
+- scrape health
+- last scrape time
+- scrape errors
+- available Windows metrics
 
-```promql
-windows_memory_available_bytes
-```
+## PromQL
+
+The exact metric names depend on the Windows exporter version and collectors enabled in the original lab. Query the Prometheus expression browser or exporter endpoint to confirm the available metrics before building additional dashboard panels.
 
 ## Scaling
 
-For multiple Windows machines, add targets under the same job or create separate jobs with meaningful labels such as environment, role and hostname.
+The configuration uses labels to distinguish the Domain Controller from the user PC. Additional Windows domain systems can be added as separate targets while retaining the same monitoring job.
