@@ -74,6 +74,6 @@ Prometheus is the metrics collection and time-series layer. Grafana provides the
 
 ## Evidence
 
-The repository documents the actual lab topology supplied for this project. Screenshots of the Prometheus targets and Grafana dashboards should be added under `screenshots/` if available so the repository contains visual evidence of the implemented environment.
+The repository documents the actual lab topology supplied for this project. Screenshots of the Prometheus targets and Grafana dashboards should be added under `screenshots/` so the repository contains visual evidence of the implemented environment.
 
-Do not commit passwords, API keys, tokens or other secrets.
+
